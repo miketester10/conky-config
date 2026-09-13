@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Conky display watcher
+Comment=Restarts Conky after a COSMIC display configuration change
+Exec=sh -c "$HOME/.config/conky/conky-display-watch.sh"
+StartupNotify=false
+Terminal=false
+Icon=conky-logomark-violet
+Categories=System;Monitor;
