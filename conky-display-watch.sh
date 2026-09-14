@@ -23,6 +23,7 @@ start_conky() {
         wait "$conky_pid" 2>/dev/null || true
     fi
 
+    "$config_dir/conky-blur-background.sh" || true
     conky --pause=1 --config "$config_dir/conky.conf" &
     conky_pid=$!
 }
