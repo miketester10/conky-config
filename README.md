@@ -1,6 +1,6 @@
 # Conky per CachyOS + COSMIC (Wayland)
 
-Guida completa per ricreare da zero questo pannello Conky su una nuova installazione di **CachyOS con COSMIC in sessione Wayland**. Il risultato è un pannello desktop in alto a destra con informazioni su CPU, RAM, GPU AMD, archiviazione e rete, font JetBrains Mono, sfondo ritagliato e sfocato e angoli arrotondati.
+Guida completa per ricreare da zero questo pannello Conky su una nuova installazione di **CachyOS con COSMIC in sessione Wayland**. Il risultato è un pannello desktop in alto a destra con informazioni su CPU, RAM, GPU AMD, archiviazione e rete, font JetBrains Mono e sfondo ritagliato e sfocato con angoli a 90°.
 
 Include inoltre un piccolo watcher: su COSMIC, dopo avere spento e riacceso un monitor, Conky può restare in esecuzione ma scomparire dal desktop. Il watcher lo riavvia in modo controllato e impedisce la creazione di istanze duplicate.
 
@@ -157,7 +157,7 @@ journalctl --user -b -o cat _COMM=cosmic-comp
 
 e aggiorna il blocco `case` in `conky-display-watch.sh` solo se il problema ricompare.
 
-## 7. Sfondo blur e angoli arrotondati
+## 7. Sfondo blur
 
 Lo sfondo non usa X11 né trasparenza gestita dal compositor. Lo script `conky-blur-background.sh`:
 
@@ -165,7 +165,7 @@ Lo sfondo non usa X11 né trasparenza gestita dal compositor. Lo script `conky-b
 2. legge risoluzione e scala dell'output da `cosmic-randr list`;
 3. ritaglia la porzione del wallpaper dietro il pannello;
 4. la sfoca con ImageMagick e la salva in `~/.config/conky/cache/blurred-background.png`;
-5. `conky-blur-background.lua` la disegna con clipping arrotondato.
+5. `conky-blur-background.lua` la disegna come rettangolo a 90° senza clipping.
 
 Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper una volta al minuto: se cambia, lo script rigenera la cache e ricarica Conky.
 
@@ -175,17 +175,17 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
 | Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px |
 | Altezza area del blur | script blur | `1100` px |
-| Intensità blur | script blur | `blur_sigma=12` |
-| Velatura | script blur | `brightness=-8` |
-| Raggio angoli | Lua | `16` px |
+| Intensità blur | script blur | `blur_sigma=20` |
+| Velatura | script blur | `brightness=-6` |
+| Angoli | Lua | `90°` (rettangolo, senza clipping) |
 
 Per cambiare l'intensità del blur modifica in `~/.config/conky/conky-blur-background.sh` questa riga:
 
 ```bash
-blur_sigma=12
+blur_sigma=20
 ```
 
-Valori maggiori sfocano di più; prova ad esempio `8`, `16` o `20`. Per ridurre o aumentare la velatura modifica `brightness=-8`: valori più negativi sono più scuri. Dopo una modifica rigenera e riavvia:
+Valori maggiori sfocano di più; prova ad esempio `8`, `16` o `20`. Per ridurre o aumentare la velatura modifica `brightness=-6`: valori più negativi sono più scuri. Dopo una modifica rigenera e riavvia:
 
 ```bash
 ~/.config/conky/conky-blur-background.sh
