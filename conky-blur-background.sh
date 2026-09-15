@@ -12,8 +12,8 @@ panel_width=340
 panel_height=1100
 gap_x=30
 gap_y=40
-blur_sigma=12
-brightness=-8
+blur_sigma=20
+brightness=-6
 corner_colour='#0c0d1c'
 
 wallpaper=$(sed -n 's/^[[:space:]]*source: Path("\(.*\)"),$/\1/p' "$cosmic_background_config" | head -n 1)
