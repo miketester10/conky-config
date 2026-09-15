@@ -29,6 +29,8 @@ function conky_draw_blurred_background()
 
     rounded_rectangle(context, conky_window.width, conky_window.height, 16)
     cairo_clip(context)
-    cairo_place_image(image_path, context, 0, 0, conky_window.width, conky_window.height, 1.0)
+    -- Un pixel di abbondanza evita una possibile fessura scura sul bordo alto
+    -- dovuta all'arrotondamento tra la superficie Cairo e il PNG del blur.
+    cairo_place_image(image_path, context, 0, -1, conky_window.width, conky_window.height + 2, 1.0)
     cairo_destroy(context)
 end
