@@ -8,8 +8,8 @@ cache_dir="$config_dir/cache"
 output_image="$cache_dir/blurred-background.png"
 signature_file="$cache_dir/blurred-background.signature"
 
-panel_width=340
-panel_height=1100
+panel_width=348
+panel_height=1096
 gap_x=30
 gap_y=40
 blur_sigma=20
@@ -28,8 +28,9 @@ screen_width=${resolution%x*}
 screen_height=${resolution#*x}
 logical_width=$(awk -v value="$screen_width" -v scale="$scale_percent" 'BEGIN {printf "%d", value * 100 / scale + 0.5}')
 logical_height=$(awk -v value="$screen_height" -v scale="$scale_percent" 'BEGIN {printf "%d", value * 100 / scale + 0.5}')
+# Allineamento pianeta: abbassato di 4px (90 -> 86) per rifinitura fine
 crop_x=$((logical_width - gap_x - panel_width))
-crop_y=$gap_y
+crop_y=$((gap_y + 46))
 [ "$crop_x" -ge 0 ] && [ $((crop_y + panel_height)) -le "$logical_height" ] || exit 0
 
 signature="$wallpaper|$logical_width|$logical_height|$crop_x|$crop_y|$panel_width|$panel_height|$blur_sigma|$brightness|$corner_colour"

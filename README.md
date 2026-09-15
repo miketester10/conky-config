@@ -171,10 +171,11 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 
 | Elemento | File | Valore attuale |
 | --- | --- | --- |
-| Larghezza pannello | `conky.conf` e script blur | `340` px |
+| Larghezza pannello | `conky.conf` e script blur | `348` px |
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
-| Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px |
-| Altezza area del blur | script blur | `1100` px |
+| Distanza dall'alto (finestra) | `conky.conf` | `gap_y = 40` px |
+| Ritaglio verticale blur | script blur | `crop_y = gap_y + 46 = 86` px (offset per allineare il wallpaper) |
+| Altezza area del blur | script blur | `1096` px |
 | Intensità blur | script blur | `blur_sigma=20` |
 | Velatura | script blur | `brightness=-6` |
 | Angoli | Lua | `90°` (rettangolo, senza clipping) |
@@ -192,7 +193,7 @@ Valori maggiori sfocano di più; prova ad esempio `8`, `16` o `20`. Per ridurre 
 systemctl --user restart app-conky@autostart.service
 ```
 
-Se cambi `maximum_width`, `minimum_width`, `gap_x` o `gap_y` in `conky.conf`, cambia gli stessi valori all'inizio dello script blur. Se il monitor è più basso di 1140 px logici, riduci anche `panel_height=1100` a un valore che lasci spazio per `gap_y`. Il pannello deve restare in `alignment = 'top_right'`: lo script calcola il ritaglio specificamente per quella posizione.
+Se cambi `maximum_width`, `minimum_width`, `gap_x` o `gap_y` in `conky.conf`, cambia gli stessi valori all'inizio dello script blur. Le barre e i grafici usano larghezza `316` (`348 - 16 - 16` per `offset 16` e `alignr 16`). Se il monitor è più basso di 1140 px logici, riduci anche `panel_height=1096` a un valore che lasci spazio per `gap_y` e `crop_y`. Il pannello deve restare in `alignment = 'top_right'`: lo script calcola il ritaglio specificamente per quella posizione.
 
 ## 8. Adattamenti per il nuovo PC
 

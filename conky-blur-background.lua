@@ -18,8 +18,8 @@ function conky_draw_blurred_background()
 
     local context = cairo_create(conky_surface())
 
-    -- Un pixel di abbondanza evita una possibile fessura scura sul bordo alto
-    -- dovuta all'allineamento tra la superficie Cairo e il PNG del blur.
-    cairo_place_image(image_path, context, 0, -1, conky_window.width, conky_window.height + 2, 1.0)
+    -- Disegna 1:1 senza stiramento: finestra misurata 348x1096, immagine ora 348x1096
+    -- Nessun offset -1/+2, allineamento pixel-perfect con il wallpaper.
+    cairo_place_image(image_path, context, 0, 0, conky_window.width, conky_window.height, 1.0)
     cairo_destroy(context)
 end
