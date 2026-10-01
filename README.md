@@ -53,7 +53,7 @@ Il repository contiene tutti i file sorgente da conservare nel backup:
 ├── conky.conf                    # layout e valori mostrati dal pannello
 ├── conky-display-watch.sh        # avvio e ripristino dopo monitor off/on
 ├── conky-blur-background.sh      # crea il ritaglio sfocato del wallpaper
-├── conky-blur-background.lua     # disegna il ritaglio con angoli arrotondati
+├── conky-blur-background.lua     # disegna il ritaglio come rettangolo a 90°
 ├── autostart/
 │   └── conky.desktop             # modello della voce di autostart
 ├── README.md
@@ -202,9 +202,9 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 | Elemento | File | Valore attuale |
 | --- | --- | --- |
 | Larghezza finestra misurata | `conky.conf` (`maximum 356` + 8 overhead) e blur | `364` px |
-| Larghezza barre/grafici | `conky.conf` | `332` px (`364 - 16 - 16`, allineati a `alignr 16`) |
+| Larghezza barre/grafici | `conky.conf` | `324` px (testi a `340` = `maximum 356` − 16; barre da 16 a 340) |
 | Font corpo | `conky.conf` | `JetBrains Mono:size=10` (uniforme, per stare in 1080p) |
-| Font titoli sezioni | `conky.conf` | `JetBrains Mono:size=12` (solo SYSTEM/GPU/STORAGE/NETWORK, dashes a 10) |
+| Font titoli sezioni | `conky.conf` | `JetBrains Mono:size=12:bold` (solo SYSTEM/GPU/STORAGE/NETWORK, dashes a 10) |
 | Altezza grafici rete | `conky.conf` | `20` px (compatto per 1080p) |
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
 | Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px (`crop_y = 40`, nessun offset) |
@@ -226,7 +226,7 @@ Valori maggiori sfocano di più; prova ad esempio `8`, `16` o `20`. Per ridurre 
 systemctl --user restart app-conky@autostart.service
 ```
 
-Se cambi `maximum_width`, `minimum_width`, `gap_x` o `gap_y` in `conky.conf`, cambia gli stessi valori all'inizio dello script blur. Le barre e i grafici usano larghezza `332` (`364 - 16 - 16` per `offset 16` e `alignr 16`, allineati a destra). Il layout di questo branch ha spaziatura uniforme (1 riga vuota tra ogni voce, 1 sopra/sotto ogni titolo, font 10) per stare in `1080 - 40 = 1040` px. Il pannello deve restare in `alignment = 'top_right'`: lo script calcola il ritaglio specificamente per quella posizione.
+Se cambi `maximum_width`, `minimum_width`, `gap_x` o `gap_y` in `conky.conf`, cambia gli stessi valori all'inizio dello script blur. Le barre e i grafici usano larghezza `324` (da `offset 16` a `340` = `maximum 356` − 16, pari ai testi `alignr 16`). I titoli sono in Bold size 12, il corpo in size 10. Il layout di questo branch ha spaziatura uniforme (1 riga vuota tra ogni voce, 1 sopra/sotto ogni titolo) per stare in `1080 - 40 = 1040` px. Il pannello deve restare in `alignment = 'top_right'`: lo script calcola il ritaglio specificamente per quella posizione.
 
 ## 8. Adattamenti per il nuovo PC
 
@@ -262,14 +262,14 @@ Sostituisci `Tctl` con la label che compare sul tuo sistema, per esempio `Packag
 
 ### GPU
 
-La sezione attuale è pensata per AMDGPU/Radeon 780M. Prima di modificare i percorsi, individua i file esposti dalla tua GPU:
+La sezione attuale è pensata per GPU AMD (titolo `GPU`, sensore `edge`). Prima di modificare i percorsi, individua i file esposti dalla tua GPU:
 
 ```bash
 find /sys/class/drm -path '*device*' \( -name gpu_busy_percent -o -name mem_info_vram_used -o -name mem_info_vram_total -o -name power1_average \) 2>/dev/null
 sensors
 ```
 
-In particolare `Power` usa un percorso specifico `/sys/class/drm/card1/device/hwmon/hwmon2/power1_average`; sul nuovo PC trova il percorso restituito da `find` e sostituiscilo. Cambia anche il titolo `GPU (Radeon 780M)` e il sensore `edge` se necessario. GPU NVIDIA o Intel richiedono comandi differenti: puoi rimuovere temporaneamente le righe GPU finché non sono adattate.
+In particolare `Power` usa un percorso specifico `/sys/class/drm/card1/device/hwmon/hwmon2/power1_average`; sul nuovo PC trova il percorso restituito da `find` e sostituiscilo. Cambia anche il titolo `GPU` (es. `GPU (Radeon 780M)`) e il sensore `edge` se necessario. GPU NVIDIA o Intel richiedono comandi differenti: puoi rimuovere temporaneamente le righe GPU finché non sono adattate.
 
 ## 9. Frequenza di aggiornamento e impatto
 
