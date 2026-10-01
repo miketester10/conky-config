@@ -18,8 +18,7 @@ function conky_draw_blurred_background()
 
     local context = cairo_create(conky_surface())
 
-    -- Disegna 1:1 senza stiramento: finestra misurata 348x1096, immagine ora 348x1096
-    -- Nessun offset -1/+2, allineamento pixel-perfect con il wallpaper.
+    -- Branch 1080p: finestra compatta 356x608, disegno 1:1 senza offset.
     cairo_place_image(image_path, context, 0, 0, conky_window.width, conky_window.height, 1.0)
     cairo_destroy(context)
 end
