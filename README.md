@@ -1,6 +1,10 @@
-# Conky per CachyOS + COSMIC (Wayland) — branch `monitor_1920x1080`
+# Conky per CachyOS + COSMIC (Wayland)
 
-> Questo branch è per monitor **23" 1920x1080@100%** con layout arioso uniforme (`364x946`, corpo 10 / titoli 12). Il `main` resta per 2K `2560x1440@114%` (`348x1096`). Per tornare al 2K: `git checkout main`, rigenera blur e riavvia il servizio.
+> Questa repo fornisce **due branch**, uno per monitor (stesso PC, una sola configurazione attiva alla volta):
+> - `main` → monitor **27" 2560x1440@114%** (layout `348x1096`, font 11, offset blur `+46`)
+> - `monitor_1920x1080` → monitor **23" 1920x1080@100%** (layout arioso uniforme `364x946`, corpo 10 / titoli 12 Bold)
+>
+> Vedi [Installazione da repository Git](#3-installazione-da-repository-git) per scegliere il branch e passare dall'uno all'altro.
 
 Guida completa per ricreare da zero questo pannello Conky su una nuova installazione di **CachyOS con COSMIC in sessione Wayland**. Il risultato è un pannello desktop in alto a destra con informazioni su CPU, RAM, GPU AMD, archiviazione e rete, font JetBrains Mono e sfondo ritagliato e sfocato con angoli a 90°.
 
@@ -76,6 +80,30 @@ chmod 755 ~/.config/conky/conky-display-watch.sh ~/.config/conky/conky-blur-back
 ```
 
 Se la cartella `~/.config/conky` esiste già perché hai copiato i file da un backup, **non eseguire `git clone` sopra di essa**. Passa alla sezione seguente.
+
+### Scelta del branch per il monitor
+
+Il clone scarica di default il branch `main` (**27" 2560x1440**). Per il **23" 1920x1080** passa al branch dedicato e rigenera blur + riavvio:
+
+```bash
+cd ~/.config/conky
+git checkout monitor_1920x1080
+rm -f ~/.config/conky/cache/blurred-background.signature
+~/.config/conky/conky-blur-background.sh
+systemctl --user restart app-conky@autostart.service
+```
+
+Per tornare al 27" 2K:
+
+```bash
+cd ~/.config/conky
+git checkout main
+rm -f ~/.config/conky/cache/blurred-background.signature
+~/.config/conky/conky-blur-background.sh
+systemctl --user restart app-conky@autostart.service
+```
+
+La cache del blur include risoluzione e ritaglio nella firma, quindi al cambio monitor va rigenerata come sopra; non copiare mai la cartella `cache/` tra PC diversi.
 
 ## 4. Installazione da backup o chiavetta USB
 
