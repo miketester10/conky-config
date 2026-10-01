@@ -178,7 +178,7 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 | Altezza grafici rete | `conky.conf` | `20` px (compatto per 1080p) |
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
 | Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px (`crop_y = 40`, nessun offset) |
-| Altezza area del blur | script blur | `988` px (finestra ariosa, `40+988=1028 <= 1080`) |
+| Altezza area del blur | script blur | `948` px (finestra ariosa, `40+948=988 <= 1080`, 92px margine sotto) |
 | Intensità blur | script blur | `blur_sigma=20` |
 | Velatura | script blur | `brightness=-6` |
 | Angoli | Lua | `90°` (rettangolo, senza clipping) |
