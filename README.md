@@ -53,7 +53,7 @@ Il repository contiene tutti i file sorgente da conservare nel backup:
 ├── conky.conf                    # layout e valori mostrati dal pannello
 ├── conky-display-watch.sh        # avvio e ripristino dopo monitor off/on
 ├── conky-blur-background.sh      # crea il ritaglio sfocato del wallpaper
-├── conky-blur-background.lua     # disegna il ritaglio con angoli arrotondati
+├── conky-blur-background.lua     # disegna il ritaglio come rettangolo a 90°
 ├── autostart/
 │   └── conky.desktop             # modello della voce di autostart
 ├── README.md
@@ -202,6 +202,9 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 | Elemento | File | Valore attuale |
 | --- | --- | --- |
 | Larghezza pannello | `conky.conf` e script blur | `348` px |
+| Larghezza barre/grafici | `conky.conf` | `316` px (`348 - 16 - 16`, allineati a `alignr 16`) |
+| Font | `conky.conf` | `JetBrains Mono:size=11` (titoli regolari, stessa misura del corpo) |
+| Altezza grafici rete | `conky.conf` | `24` px |
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
 | Distanza dall'alto (finestra) | `conky.conf` | `gap_y = 40` px |
 | Ritaglio verticale blur | script blur | `crop_y = gap_y + 46 = 86` px (offset per allineare il wallpaper) |
@@ -259,14 +262,14 @@ Sostituisci `Tctl` con la label che compare sul tuo sistema, per esempio `Packag
 
 ### GPU
 
-La sezione attuale è pensata per AMDGPU/Radeon 780M. Prima di modificare i percorsi, individua i file esposti dalla tua GPU:
+La sezione attuale è pensata per GPU AMD (titolo `GPU`, sensore `edge`). Prima di modificare i percorsi, individua i file esposti dalla tua GPU:
 
 ```bash
 find /sys/class/drm -path '*device*' \( -name gpu_busy_percent -o -name mem_info_vram_used -o -name mem_info_vram_total -o -name power1_average \) 2>/dev/null
 sensors
 ```
 
-In particolare `Power` usa un percorso specifico `/sys/class/drm/card1/device/hwmon/hwmon2/power1_average`; sul nuovo PC trova il percorso restituito da `find` e sostituiscilo. Cambia anche il titolo `GPU (Radeon 780M)` e il sensore `edge` se necessario. GPU NVIDIA o Intel richiedono comandi differenti: puoi rimuovere temporaneamente le righe GPU finché non sono adattate.
+In particolare `Power` usa un percorso specifico `/sys/class/drm/card1/device/hwmon/hwmon2/power1_average`; sul nuovo PC trova il percorso restituito da `find` e sostituiscilo. Cambia anche il titolo `GPU` (es. `GPU (Radeon 780M)`) e il sensore `edge` se necessario. GPU NVIDIA o Intel richiedono comandi differenti: puoi rimuovere temporaneamente le righe GPU finché non sono adattate.
 
 ## 9. Frequenza di aggiornamento e impatto
 
