@@ -207,7 +207,7 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 | Font titoli sezioni | `conky.conf` | `JetBrains Mono:size=12:bold` (solo SYSTEM/GPU/STORAGE/NETWORK, dashes a 10) |
 | Altezza grafici rete | `conky.conf` | `20` px (compatto per 1080p) |
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
-| Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px (`crop_y = 40`, nessun offset) |
+| Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px, `crop_y = 86` (`gap_y + 46`, tarato a occhio come sul 2K) |
 | Altezza area del blur | script blur | `946` px (`40+946=986 <= 1080`, 94px margine sotto) |
 | Intensità blur | script blur | `blur_sigma=20` |
 | Velatura | script blur | `brightness=-6` |

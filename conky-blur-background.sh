@@ -28,9 +28,9 @@ screen_width=${resolution%x*}
 screen_height=${resolution#*x}
 logical_width=$(awk -v value="$screen_width" -v scale="$scale_percent" 'BEGIN {printf "%d", value * 100 / scale + 0.5}')
 logical_height=$(awk -v value="$screen_height" -v scale="$scale_percent" 'BEGIN {printf "%d", value * 100 / scale + 0.5}')
-# Branch 1080p: nessun offset pianeta (wallpaper astratto), crop = gap per pixel-perfect
+# Taratura 1080p: stesso offset del 2K come base (+46), da rifinire a occhio
 crop_x=$((logical_width - gap_x - panel_width))
-crop_y=$gap_y
+crop_y=$((gap_y + 46))
 [ "$crop_x" -ge 0 ] && [ $((crop_y + panel_height)) -le "$logical_height" ] || exit 0
 
 signature="$wallpaper|$logical_width|$logical_height|$crop_x|$crop_y|$panel_width|$panel_height|$blur_sigma|$brightness|$corner_colour"
