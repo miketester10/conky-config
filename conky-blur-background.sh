@@ -9,7 +9,7 @@ output_image="$cache_dir/blurred-background.png"
 signature_file="$cache_dir/blurred-background.signature"
 
 panel_width=364
-panel_height=930
+panel_height=946
 gap_x=30
 gap_y=40
 blur_sigma=20
