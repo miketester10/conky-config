@@ -1,6 +1,6 @@
 # Conky per CachyOS + COSMIC (Wayland) — branch `monitor_1920x1080`
 
-> Questo branch è per monitor **23" 1920x1080@100%** con layout compattato (`356x608`). Il `main` resta per 2K `2560x1440@114%` (`348x1096`). Per tornare al 2K: `git checkout main`, rigenera blur e riavvia il servizio.
+> Questo branch è per monitor **23" 1920x1080@100%** con layout arioso uniforme (`364x930`, font 10). Il `main` resta per 2K `2560x1440@114%` (`348x1096`). Per tornare al 2K: `git checkout main`, rigenera blur e riavvia il servizio.
 
 Guida completa per ricreare da zero questo pannello Conky su una nuova installazione di **CachyOS con COSMIC in sessione Wayland**. Il risultato è un pannello desktop in alto a destra con informazioni su CPU, RAM, GPU AMD, archiviazione e rete, font JetBrains Mono e sfondo ritagliato e sfocato con angoli a 90°.
 
@@ -173,12 +173,13 @@ Al primo avvio il watcher crea la cache. In seguito Lua controlla il wallpaper u
 
 | Elemento | File | Valore attuale |
 | --- | --- | --- |
-| Larghezza finestra misurata | `conky.conf` (`maximum 348` + 8 overhead) e blur | `356` px |
-| Larghezza barre/grafici | `conky.conf` | `324` px (`356 - 16 - 16`) |
+| Larghezza finestra misurata | `conky.conf` (`maximum 356` + 8 overhead) e blur | `364` px |
+| Larghezza barre/grafici | `conky.conf` | `332` px (`364 - 16 - 16`, allineati a `alignr 16`) |
+| Font | `conky.conf` | `JetBrains Mono:size=10` (uniforme, per stare in 1080p) |
 | Altezza grafici rete | `conky.conf` | `20` px (compatto per 1080p) |
 | Distanza da destra | `conky.conf` e script blur | `gap_x = 30` px |
 | Distanza dall'alto | `conky.conf` e script blur | `gap_y = 40` px (`crop_y = 40`, nessun offset) |
-| Altezza area del blur | script blur | `948` px (finestra ariosa, `40+948=988 <= 1080`, 92px margine sotto) |
+| Altezza area del blur | script blur | `930` px (finestra ariosa uniforme, `40+930=970 <= 1080`, 110px margine sotto) |
 | Intensità blur | script blur | `blur_sigma=20` |
 | Velatura | script blur | `brightness=-6` |
 | Angoli | Lua | `90°` (rettangolo, senza clipping) |
@@ -196,7 +197,7 @@ Valori maggiori sfocano di più; prova ad esempio `8`, `16` o `20`. Per ridurre 
 systemctl --user restart app-conky@autostart.service
 ```
 
-Se cambi `maximum_width`, `minimum_width`, `gap_x` o `gap_y` in `conky.conf`, cambia gli stessi valori all'inizio dello script blur. Le barre e i grafici usano larghezza `324` (`356 - 16 - 16` per `offset 16` e `alignr 16`). Il layout di questo branch è compattato (niente righe vuote tra le voci, una sola riga vuota tra le sezioni) per stare in `1080 - 40 = 1040` px. Il pannello deve restare in `alignment = 'top_right'`: lo script calcola il ritaglio specificamente per quella posizione.
+Se cambi `maximum_width`, `minimum_width`, `gap_x` o `gap_y` in `conky.conf`, cambia gli stessi valori all'inizio dello script blur. Le barre e i grafici usano larghezza `332` (`364 - 16 - 16` per `offset 16` e `alignr 16`, allineati a destra). Il layout di questo branch ha spaziatura uniforme (1 riga vuota tra ogni voce, 1 sopra/sotto ogni titolo, font 10) per stare in `1080 - 40 = 1040` px. Il pannello deve restare in `alignment = 'top_right'`: lo script calcola il ritaglio specificamente per quella posizione.
 
 ## 8. Adattamenti per il nuovo PC
 

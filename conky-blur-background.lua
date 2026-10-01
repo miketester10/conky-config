@@ -18,7 +18,7 @@ function conky_draw_blurred_background()
 
     local context = cairo_create(conky_surface())
 
-    -- Branch 1080p: finestra ariosa 356x948, disegno 1:1 senza offset.
+    -- Branch 1080p: finestra 364x930 (maximum 356 + 8 overhead), disegno 1:1.
     cairo_place_image(image_path, context, 0, 0, conky_window.width, conky_window.height, 1.0)
     cairo_destroy(context)
 end
